@@ -33,6 +33,7 @@
 ;4. Look back
 ;Passes tests, but can it be solved w/o creating a set? Even if set lookup is efficient, this requires iterating
 ;through each character and adding it to the set which is O(N).
+;also I can directly use Java's .toLowerCase if I don't want to import clojure.string
 
 
 ;----------------
@@ -108,7 +109,19 @@
 ;3. Carry out the plan
 (defn pangram-3?
   [string]
-  (let [lower-cased-string (str/lower-case string)]))
+  (let [lower-cased-string (str/lower-case string)
+        final-set (transient #{})]
+    (doseq [char lower-cased-string
+            :while (< (count final-set) 26)
+            :when (and (contains? alphabet-as-set char) (not (contains? final-set char)))]
+      (conj! final-set char))
+    (= 26 (count final-set))))
 
 ;4. Look back
-;
+; Passes tests
+; Good:
+; - Better than previous solution because I exit once all 26 characters have been found.
+; Bad:
+; - Because there isn't a way to exit the loop, when it stops it's either because the `while` has been fulfilled
+; (the set `count` is > 26) or the sentence has been exhausted, meaning I have to check the `count` one more time.
+; I feel most satisfied with my first solution
