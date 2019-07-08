@@ -1,13 +1,13 @@
 (ns algos.methodical_problem_solving.prework.pangram
   (:require [clojure.string :as str]))
 
+;----------------
+;APPROACH 1
+;----------------
 ;1. Understand the problem:
 ;Write a function that takes a string and returns a boolean indicating whether the string
 ;contains all 26 characters of the English alphabet at least once
 ;
-;----------------
-;APPROACH 1
-;----------------
 ;2. Devise a plan
 ;Write tests as a way to suss out possible edge-cases (capitalization, punctuation)
 ;Think about possible data structures / needed variables / approaches (list of all 26 chars, sets, regex)
@@ -27,8 +27,8 @@
 
 (defn pangram-1?
   [s]
-  (let [lower-cased-s (str/lower-case s)]
-    (every? (set lower-cased-s) chars-of-the-alphabet-1)))
+  (let [s-as-set (set (str/lower-case s))]
+    (every? s-as-set chars-of-the-alphabet-1)))
 
 ;4. Look back
 ;Passes tests, but can it be solved w/o creating a set? Even if set lookup is efficient, this requires iterating
@@ -38,8 +38,10 @@
 ;----------------
 ;APPROACH 2
 ;----------------
-;2. Devise a plan
+;1. Understand the problem:
 ;Write a function that determines if a string is a pangram w/o changing the data structure.
+;
+;2. Devise a plan
 ;Sequence functions are idiomatic Clojure but If I use `map`, I'll have to iterate through at least all 26 letters of the alphabet
 ;even though I should be exiting once a match isn't found. Clojure is written in Java which doesn't currently support
 ;tail-call optimization but it does have `loop`/`recur` ["which does constant-space recursive looping"](https://clojure.org/about/functional_programming#_recursive_looping)
@@ -62,13 +64,21 @@
 ;Passes tests, but I don't love that I'm:
 ;- checking if the current character is nil each time
 ;- checking the entire input string each time (`str/includes?` uses Java's `String.contains` under the hood which uses
-;`String.indexOf` which has O(N) complexity but I'm running it between 1 & 26 times.
+;`String.indexOf` which has O(N) complexity but I'm running it between up to 26 times)
+
 
 ;----------------
 ;APPROACH 3
 ;----------------
-;2. Devise a plan
+;1. Understand the problem:
+;Can I avoid checking the entire sentence each time?
 ;
+;2. Devise a plan
+;If I don't want to check the entire sentence each time I could keep a separate record of which characters I've found
+;so far. If I build *up* a set, I'd have to be checking whether each character was indeed part of the original 26 which
+;negates benefits of doing it this way. I could build *down* a set but Clojure's data structures are immutable and I'm not
+;sure what the implications of creating a new set each time I attempt to remove an element would be.
+
 ;3. Carry out the plan
 (defn pangram-3?
   [s])
