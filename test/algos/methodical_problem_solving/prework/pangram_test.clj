@@ -4,8 +4,8 @@
 
 (deftest pangram-test
   (testing "is the given string a pangram?"
-    (are [res str] (= (pangram? str) res)
+    (are [res str] (= (pangram-0? str) res)
                    true "the quick brown fox jumps over the lazy dog"
                    true "My girl wove six dozen plaid jackets before she quit!"
-                   true "New job: fix Mr Gluck's hazy TV, PD"
+                   true "J.Q. Schwartz flung V.D. Pike my box"
                    false "Sadly, I am not a pangram :(")))
