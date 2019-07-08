@@ -6,7 +6,7 @@
 ;contains all 26 characters of the English alphabet at least once
 ;
 ;----------------
-;APPROACH 0
+;APPROACH 1
 ;----------------
 ;2. Devise a plan
 ;Write tests as a way to suss out possible edge-cases (capitalization, punctuation)
@@ -22,13 +22,13 @@
 ;on all inputs or one that usually runs quickly but can take years of CPU time (or more) on some inputs, the decision should be easy."
 ;
 ;3. Carry out the plan
-(def chars-of-the-alphabet-0
+(def chars-of-the-alphabet-1
   #{\a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \p \q \r \s \t \u \v \w \x \y \z})
 
-(defn pangram-0?
+(defn pangram-1?
   [s]
   (let [lower-cased-s (str/lower-case s)]
-    (every? (set lower-cased-s) chars-of-the-alphabet-0)))
+    (every? (set lower-cased-s) chars-of-the-alphabet-1)))
 
 ;4. Look back
 ;Passes tests, but can it be solved w/o creating a set? Even if set lookup is efficient, this requires iterating
@@ -36,7 +36,7 @@
 
 
 ;----------------
-;APPROACH 1
+;APPROACH 2
 ;----------------
 ;2. Devise a plan
 ;Write a function that determines if a string is a pangram w/o changing the data structure.
@@ -45,14 +45,14 @@
 ;tail-call optimization but it does have `loop`/`recur` ["which does constant-space recursive looping"](https://clojure.org/about/functional_programming#_recursive_looping)
 
 ;3. Carry out the plan
-(def chars-of-the-alphabet-1
+(def chars-of-the-alphabet-2
   ["a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"])
 
-(defn pangram-1?
+(defn pangram-2?
   [s]
   (let [lower-cased-s (str/lower-case s)]
-    (loop [current-char (first chars-of-the-alphabet-1)
-           remaining-chars (rest chars-of-the-alphabet-1)]
+    (loop [current-char (first chars-of-the-alphabet-2)
+           remaining-chars (rest chars-of-the-alphabet-2)]
       (cond
         (nil? current-char) true
         (str/includes? lower-cased-s current-char) (recur (first remaining-chars) (rest remaining-chars))
@@ -63,3 +63,13 @@
 ;- checking if the current character is nil each time
 ;- checking the entire input string each time (`str/includes?` uses Java's `String.contains` under the hood which uses
 ;`String.indexOf` which has O(N) complexity but I'm running it between 1 & 26 times.
+
+;----------------
+;APPROACH 3
+;----------------
+;2. Devise a plan
+;
+;3. Carry out the plan
+(defn pangram-3?
+  [s])
+;4. Look back
