@@ -71,6 +71,12 @@
 ;               :while (str/includes? lower-cased-string char)]
 ;           char)))))
 
+; using every?
+;(defn pangram-1?
+;  [string]
+;  (let [lower-cased-string (str/lower-case string)]
+;    (every? #(str/includes? lower-cased-string %) alphabet-as-vec)))
+
 ;4. Look back
 ;Passes tests, but I don't love that I'm:
 ;- checking if the current character is nil each time
