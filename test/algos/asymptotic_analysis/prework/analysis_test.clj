@@ -7,8 +7,8 @@
   (testing "are the given strings anagrams?"
     (are [res s1 s2] (= (anagram? s1 s2) res)
                 true "earth" "heart"
-                true "the eyes" "they see"
-                true "the eyes" "they see"
-                true "School master" "The classroom"
-                false "not" "an anagram"
-                false "heat" "heart")))
+                true "stressed" "desserts"
+                true "night" "thing"
+                false "not" "anagram"
+                false "heat" "heart"
+                false "heart" "heart")))
