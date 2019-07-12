@@ -28,21 +28,22 @@
       (and
         (-opening-parens? (first s))
         (-closing-parens? (last s)))) false
-    :else (empty?
-            (reduce                                         ; O(N)
-              (fn [stack char]
-                (if (-opening-parens? char)                 ; O(1)
-                  (conj stack char)                         ; O(1)
-                  (if (zero? (count stack))                 ; O(1)
-                    (reduced [nil])
-                    (pop stack))))                          ; O(1)
-              []
-              s))))
+    :else (zero?
+            (count                                          ; O(1)
+              (reduce                                         ; O(N)
+                (fn [stack char]
+                  (if (-opening-parens? char)                 ; O(1)
+                    (conj stack char)                         ; O(1)
+                    (if (zero? (count stack))                 ; O(1)
+                      (reduced `(nil))
+                      (pop stack))))                          ; O(1)
+                `()
+                s)))))
 ;4. Look back
 ;I originally attempted to copy the implementation of [`frequencies`](https://github.com/clojure/clojure/blob/841fa60b41bc74367fb16ec65d025ea5bde7a617/src/clj/clojure/core.clj#L7123)
 ;which uses [transient data structures](https://clojure.org/reference/transients) as a way to accomplish Clojure-y mutation within a specific scope.
-;I found that while I could "push" items to the front of a list, I could not "pop" them. I was about to just use loop/recur
+;I found that while I could "push" items to the front of a vector, I could not "pop" them. I was about to just use loop/recur
 ;when I realized there's no reason I actually need a transient data structure 🙃. [`reduced`](https://clojuredocs.org/clojure.core/reduced)
 ;allows early exit from a `reduce`. I don't love that in order to exit early when there are no more opening parentheses
-;in the stack that I am creating an empty vector.
+;in the stack that I am creating a list with a nil element.
 ; time complexity: O(N)
