@@ -23,19 +23,19 @@
 (defn is-balanced?
   [s]
   (cond
-    (odd? (count s)) false
-    (not
+    (odd? (count s)) false                                  ; O(1)
+    (not                                                    ; O(1)
       (and
         (-opening-parens? (first s))
         (-closing-parens? (last s)))) false
     :else (empty?
-            (reduce
+            (reduce                                         ; O(N)
               (fn [stack char]
-                (if (-opening-parens? char)
-                  (conj stack char)
-                  (if (empty? stack)
+                (if (-opening-parens? char)                 ; O(1)
+                  (conj stack char)                         ; O(1)
+                  (if (zero? (count stack))                 ; O(1)
                     (reduced [nil])
-                    (pop stack))))
+                    (pop stack))))                          ; O(1)
               []
               s))))
 ;4. Look back
@@ -45,3 +45,4 @@
 ;when I realized there's no reason I actually need a transient data structure 🙃. [`reduced`](https://clojuredocs.org/clojure.core/reduced)
 ;allows early exit from a `reduce`. I don't love that in order to exit early when there are no more opening parentheses
 ;in the stack that I am creating an empty vector.
+; time complexity: O(N)
