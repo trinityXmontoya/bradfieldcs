@@ -1,5 +1,6 @@
 (ns algos.stacks_queues_dequeues.prework.stacks
-  (:require [clojure.set :as clj-set]))
+  (:require [clojure.set :as clj-set]
+            [clojure.string :as clj-str]))
 
 ;1. Understand the problem
 ;Given a string of parentheses determine whether they are balanced, meaning
@@ -84,3 +85,16 @@
 ;allows early exit from a `reduce`. I don't love that in order to exit early when there are no more opening parentheses
 ;in the stack that I am creating a list with a nil element.
 ; time complexity: O(N)
+
+; requirements: use a stack, push + pop where possible
+(defn convert-to-binary
+  [int]
+  (clj-str/join
+    ""
+    (loop [current-int int
+           stack `()]
+        (if (zero? current-int)
+          stack
+          (let [current-bin (rem current-int 2)
+                next-int (quot current-int 2)]
+            (recur next-int (conj stack current-bin)))))))

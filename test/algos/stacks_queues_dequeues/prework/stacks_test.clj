@@ -20,3 +20,9 @@
                            false "{[])"
                            false "(()"
                            false "())")))
+
+(deftest convert-to-binary-test
+  (testing ""
+    (are [binary int] (= (convert-to-binary int) binary)
+                      "101010" 42
+                      "11101001" 233)))
