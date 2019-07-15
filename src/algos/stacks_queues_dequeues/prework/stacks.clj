@@ -86,15 +86,40 @@
 ;in the stack that I am creating a list with a nil element.
 ; time complexity: O(N)
 
-; requirements: use a stack, push + pop where possible
+;-------------
+;CONVERTING NUMBER BASES
+;-------------
+; requirements: use a stack, push + pop
+(defn -int-to-base
+  "given an int, returns a list of the digits in the given base.
+   ex (-int-to-base 10 2) -> (1 0 1 0)"
+  [int base]
+  (loop [current-int int
+         stack '()]
+    (if (zero? current-int)
+      stack
+      (let [current-bin (rem current-int base)
+            next-int (quot current-int base)]
+        (recur next-int (conj stack current-bin))))))
+
+(def digits "0123456789abcdef")
+
+(defn -stack-to-str
+  "given a stack, returns a string concatentation of pop'ing each element
+   ex (-stack-to-str `(1 0 0)) -> '100'"
+  [stack]
+  (loop [current-stack stack
+         final-str ""]
+    (if (empty? current-stack)
+      final-str
+      (recur (pop current-stack) (str final-str (get digits (peek current-stack)))))))
+
 (defn convert-to-binary
   [int]
-  (clj-str/join
-    ""
-    (loop [current-int int
-           stack `()]
-        (if (zero? current-int)
-          stack
-          (let [current-bin (rem current-int 2)
-                next-int (quot current-int 2)]
-            (recur next-int (conj stack current-bin)))))))
+  (let [bin-stack (-int-to-base int 2)]
+    (-stack-to-str bin-stack)))
+
+(defn convert-to-base
+  [int base]
+  (let [bin-stack  (-int-to-base int base)]
+    (-stack-to-str bin-stack)))

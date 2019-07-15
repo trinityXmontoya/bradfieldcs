@@ -22,7 +22,14 @@
                            false "())")))
 
 (deftest convert-to-binary-test
-  (testing ""
+  (testing "binary representation of given int"
     (are [binary int] (= (convert-to-binary int) binary)
                       "101010" 42
                       "11101001" 233)))
+
+(deftest convert-to-base-test
+  (testing "representation of given int in given base"
+    (are [digits int base] (= (convert-to-base int base) digits)
+                      "11001" 25 2
+                      "19"    25 16
+                      "7e3"   2019 16)))
