@@ -1,4 +1,5 @@
-(ns algos.stacks_queues_dequeues.prework.stacks)
+(ns algos.stacks_queues_dequeues.prework.stacks
+  (:require [clojure.set :as clj-set]))
 
 ;1. Understand the problem
 ;Given a string of parentheses determine whether they are balanced, meaning
@@ -12,6 +13,9 @@
 ;next element is a ')'. The stack should be empty at the end.
 ;
 ; 3. Carry out the plan
+;-------------
+;PARENTHESES
+;-------------
 (defn -opening-parens?
   [s]
   (= s \())
@@ -20,7 +24,7 @@
   [s]
   (= s \)))
 
-(defn is-balanced?
+(defn balanced-parens?
   [s]
   (cond
     (odd? (count s)) false                                  ; O(1)
@@ -39,6 +43,39 @@
                       (pop stack))))                          ; O(1)
                 `()
                 s)))))
+
+;-------------
+;SYMBOLS
+;-------------
+(def symbol-pairs
+  { \( \)
+    \{ \}
+    \[ \]})
+
+(defn symbol-pair?
+  [opening-symbol closing-symbol]
+  (= (symbol-pairs opening-symbol) closing-symbol))
+
+(defn balanced-symbols?
+  [symbols]
+  (cond
+    (odd? (count symbols)) false
+    (not (symbol-pair? (first symbols) (last symbols))) false
+    :else (zero?
+            (count
+              (reduce
+                (fn [stack char]
+                  (if (symbol-pairs char)
+                    (conj stack char)
+                    (if
+                      (or (zero? (count stack))
+                          (not (symbol-pair? (peek stack) char)))
+                      (reduced `(nil))
+                      (pop stack))))
+                `()
+                symbols)))))
+
+
 ;4. Look back
 ;I originally attempted to copy the implementation of [`frequencies`](https://github.com/clojure/clojure/blob/841fa60b41bc74367fb16ec65d025ea5bde7a617/src/clj/clojure/core.clj#L7123)
 ;which uses [transient data structures](https://clojure.org/reference/transients) as a way to accomplish Clojure-y mutation within a specific scope.
