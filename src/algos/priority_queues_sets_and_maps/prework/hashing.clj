@@ -1,16 +1,9 @@
-(ns algos.priority_queues_sets_and_maps.prework.hashing)
-
-(defn -num-to-digits
-  [num]
-  (map
-    #(rem % 10)
-    (take-while
-      (partial < 0)
-      (iterate #(quot % 10) num))))
+(ns algos.priority_queues_sets_and_maps.prework.hashing
+  (:require [clojure.string :as s]))
 
 (defn folding-method
   [num num-of-slots]
-  (let [digit-pairs (partition 2 2 nil (-num-to-digits num))
+  (let [digit-pairs (map #(read-string (s/join %)) (partition 2 2 nil (str num)))
         sum-of-digits (reduce + digit-pairs)]
     (mod sum-of-digits num-of-slots)))
 
