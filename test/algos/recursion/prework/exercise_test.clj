@@ -13,4 +13,5 @@
 
 (deftest int-to-base-test
   (is (= (int-to-base 1450302 10) "1450302"))
-  (is (= (int-to-base 1453 16) "5ad")))
+  (is (= (int-to-base 1453 16) "5ad"))
+  (is (= (int-to-base 10 2) "1010")))
