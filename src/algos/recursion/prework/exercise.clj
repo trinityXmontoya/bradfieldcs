@@ -17,15 +17,11 @@
       (recur (rest remaining-nums) (+ final-sum (first remaining-nums))))))
 
 ;base case: list of 1 element, saves last call
-(defn -add-first-el
-  [sum nums]
-  (+ sum (first nums)))
-
 (defn sum-of-nums-recursive-2
   [nums]
   (loop [remaining-nums (rest nums)
          final-sum (first nums)]
     (if (= 1 (count remaining-nums))
-      (-add-first-el final-sum remaining-nums)
+      (+ final-sum (first remaining-nums))
       (recur (rest remaining-nums)
-             (-add-first-el final-sum remaining-nums)))))
+             (+ final-sum (first remaining-nums))))))
