@@ -10,3 +10,7 @@
 
 (deftest sum-of-nums-recursive-2-test
   (is (= (sum-of-nums-recursive-2 [1 3 5 7 9]) 25)))
+
+(deftest int-to-base-test
+  (is (= (int-to-base 1450302 10) "1450302"))
+  (is (= (int-to-base 1453 16) "5ad")))

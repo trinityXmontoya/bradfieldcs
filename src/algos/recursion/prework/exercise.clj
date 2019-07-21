@@ -25,3 +25,20 @@
       (+ final-sum (first remaining-nums))
       (recur (rest remaining-nums)
              (+ final-sum (first remaining-nums))))))
+
+;----------
+;CONVERTING INTEGER TO ANY BASE
+;----------
+(def char-for-int "0123456789abcdef")
+
+(defn int-to-base
+  [int base]
+  (loop [current-digit (mod int base)
+         remaining-int (quot int base)
+         final-string ""]
+    (let [current-digit-as-char (get char-for-int current-digit)]
+      (if (< remaining-int base)
+        (str (get char-for-int remaining-int) current-digit-as-char final-string)
+        (recur (mod remaining-int base)
+               (quot remaining-int base)
+               (str current-digit-as-char final-string))))))
