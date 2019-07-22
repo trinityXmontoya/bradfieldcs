@@ -6,9 +6,9 @@ There are ways to avoid clustering being *as bad* with linear probing by using a
 I also wonder what happens when a list filled by linear probing becomes full? (it's duplicated!! src: https://en.wikipedia.org/wiki/Open_addressing#Example_pseudocode, Note 1)
 
 From the [Ruby discussion](https://bugs.ruby-lang.org/issues/12142) on switching from chaining to linear probing, linear probing:
-- reduces 'pointer chasing' which is ["a common sequence of instructions that involves a repeated series of irregular memory access patterns that require the accessed data to determine the subsequent pointer address to be accessed"](https://en.wikichip.org/wiki/pointer_chasing).
-- *should* reduce memory usage because computers cache information in physically close locations (i.e. spatial locality)
-but there is debate in this thread about this specific implementation actually reducing memory?
+- reduces 'pointer chasing' which is ["a common sequence of instructions that involves a repeated series of irregular memory access patterns that require the accessed data to determine the subsequent pointer address to be accessed"](https://en.wikichip.org/wiki/pointer_chasing). 
+- relatedly, *should* reduce memory usage. In an array, each index is *physically adjacent*. Contrast this with a linked list where ["each new node is given a location at the time of its creation. This new node is not necessarily physically adjacent to its neighbors in the list. The result is that in a linked list nodes that are “next to each other” in the list order are rarely physically next to each other in terms of the actual location inside our RAM chip.](https://blog.bradfieldcs.com/an-introduction-to-hashing-in-the-era-of-machine-learning-6039394549b0) Computers cache information that is in physically close locations (i.e. spatial locality) and since linear probing is implemented with arrays it can benefit from this caching.
+(but there is debate in this thread about this specific implementation actually reducing memory?)
 
 *Considering a hash map that uses chaining, when should the underlying array grow?*
 
@@ -30,3 +30,8 @@ handle [deletion](https://news.ycombinator.com/item?id=19444803).
 Chaining is better if the size of the data set is unknown/dynamic because you have 'infinite' space to expand w/o having
 to worry about ^ concerns. Searching in the chain is O(M) where M is the chain size, which could be larger than the underlying
 array itself.
+
+Other notes:
+
+[Cuckoo hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing) is a method for avoiding hash collisions by providing two hashing functions for an element so it has more than one spot it can fill. If you attempt to add an element to an occupied spot, the *current* item is 'kicked out' and processed on the next round of insertion. In theory it provides constant time lookup but in practice it's slower than linear probing because it [causes two cache misses per search](https://en.wikipedia.org/wiki/Cuckoo_hashing#Practice).
+Also, Inserting items needs to be atomic (as you can imagine because you can't have different threads kicking out different items that have just been inserted) and is therefore not parallelizable (src: https://www.youtube.com/watch?v=47skwt4njTc)
