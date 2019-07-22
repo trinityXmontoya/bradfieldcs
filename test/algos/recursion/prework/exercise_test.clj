@@ -15,3 +15,6 @@
   (is (= (int-to-base 1450302 10) "1450302"))
   (is (= (int-to-base 1453 16) "5ad"))
   (is (= (int-to-base 10 2) "1010")))
+
+(deftest tower-of-hanoi-test
+  (is (= (tower-of-hanoi 5) [[] [] [0 1 2 3 4]])))

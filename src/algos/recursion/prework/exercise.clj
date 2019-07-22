@@ -16,7 +16,7 @@
       final-sum
       (recur (rest remaining-nums) (+ final-sum (first remaining-nums))))))
 
-;base case: list of 1 element, saves last call
+;base case: list of 1 element, saves last call but less idiomatic
 (defn sum-of-nums-recursive-2
   [nums]
   (loop [remaining-nums (rest nums)
@@ -46,3 +46,20 @@
         (recur (mod remaining-int base)
                (quot remaining-int base)
                (str current-digit-as-char final-string))))))
+
+(defn tower-of-hanoi
+  [height]
+    (loop [from-row (vec (range 0 height))
+           via-row []
+           to-row []]
+      (if (= height (count to-row))
+        [from-row via-row to-row]
+        (recur
+
+
+
+        )
+
+      )
+    )
+  )
