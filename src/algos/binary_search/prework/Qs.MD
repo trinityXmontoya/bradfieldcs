@@ -1,5 +1,10 @@
 1. Hashing and binary search both address the same problem: finding an item in a collection. What are some trade-offs between the two strategies? When might you want to pick one over the other?
 
+- Performance tradeoff: What are you optimizing for?
+    - Searching through a hash is O(1) while binary search is O(log N).
+    - Deleting or updating elements in a sorted array is O(N) vs O(1) for a hash
+- Complexity tradeoff: Implementing binary search is more straightforward than the process of choosing an appropriate hashing function and then dealing with collisions, deletions, etc.
+- Data: Binary search makes sense for sortable items whereas hashing is a way to enforce an indexing strategy on items that don't otherwise have it (ex. what is the 'order' of a Person object?). 
 
 
 
