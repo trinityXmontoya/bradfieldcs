@@ -3,9 +3,9 @@
 (defn binary-search
   [coll item]
   (cond
-    (empty? coll) false
-    (or (< item (first coll))
-        (> item (last coll))) false
+    (empty? coll)         false
+    (< item (first coll)) false
+    (> item (last coll))  false
     :else
     (loop [coll coll]
       (if (empty? coll)
