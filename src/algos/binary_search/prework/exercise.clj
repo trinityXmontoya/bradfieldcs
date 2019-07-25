@@ -25,7 +25,7 @@
 ;
 ; After further thought there's ~no~ reason I have to manipulate or pass around the vector at all, I can just use the indices.
 ; I also remove the check for whether it's within the given range bc I don't know if that goes against the implementation of binary search(?)
-; Doesn't seem like it should and it prevents you from doing unnecessary math but jic...
+; Doesn't seem like it should and it prevents you from doing unnecessary computations but jic...
 (defn binary-search
   [coll item]
   (if (empty? coll)
@@ -33,7 +33,7 @@
     (loop [lower-bound 0
            upper-bound (dec (count coll))]
       (if
-        (< (- upper-bound lower-bound) 1) (= (coll lower-bound) item)
+        (< upper-bound lower-bound) (= (coll lower-bound) item)
         (let [midpoint (quot (+ lower-bound upper-bound) 2)
               midpoint-el (coll midpoint)]
           (cond
