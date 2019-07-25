@@ -2,6 +2,15 @@
   (:require [clojure.test :refer :all]
             [algos.binary_search.prework.exercise :refer :all]))
 
-(deftest binary-search-test
-  (= false (binary-search [0, 1, 2, 8, 13, 17, 19, 32, 42] 3)
-     true  (binary-search [0, 1, 2, 8, 13, 17, 19, 32, 42] 13)))
+(deftest  binary-search-test
+    (are [res coll el] (= (binary-search coll el) res)
+                       false [0, 1, 2, 8, 13, 17, 19, 32, 42] 3   ; example from reading
+                       false [] 3                                 ; 0 el array
+                       false [4] 3                                ; 1 el array
+                       false [0, 1, 2, 2, 2, 8, 13, 17, 19, 32] 3 ; repeated els
+
+                       true  [0, 1, 2, 8, 13, 17, 19, 32, 42] 13  ; example from reading
+                       true  [4] 4                                ; 1 el array
+                       true  [0, 1, 2, 8, 13, 17, 19, 32, 42] 42  ; el is last val
+                       true  [0, 1, 2, 2, 2, 8, 13, 17, 19, 32] 2 ; repeated els
+     ))
