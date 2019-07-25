@@ -9,3 +9,5 @@
 If you plan to search the collection often and it is large enough to warrant implementing binary search ->
 
 Sequential search takes worst-case O(N) time. If N is large enough, and you are frequently searching through it, taking the time to sort, and then implement binary search and achieve O(log N) on each subsequent search would be worth it. 
+
+Or put another way "we cut the search space in half at each step rather than reducing it by one." (src: https://reprog.wordpress.com/2010/04/25/writing-correct-code-part-1-invariants-binary-search-part-4a/)
