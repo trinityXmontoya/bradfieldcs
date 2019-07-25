@@ -1,17 +1,16 @@
-(ns algos.binary_search.prework.exercise
-  (:require [clojure.string :as s]))
+(ns algos.binary_search.prework.exercise)
 
 (defn binary-search
-  [coll el]
+  [coll item]
   (loop [coll coll]
     (if (empty? coll)
       false
       (let [midpoint (quot (count coll) 2)
             midpoint-el (get coll midpoint)]
         (cond
-          (= el midpoint-el) true
-          (< el midpoint-el) (recur (subvec coll 0 midpoint))
-          (> el midpoint-el) (recur (subvec coll (inc midpoint))))))))
+          (= item midpoint-el) true
+          (< item midpoint-el) (recur (subvec coll 0 midpoint))
+          (> item midpoint-el) (recur (subvec coll (inc midpoint))))))))
 
 ;4. Looking back
 ; unlike Python's slice, subvec is O(1)

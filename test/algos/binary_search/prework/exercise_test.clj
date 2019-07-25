@@ -3,7 +3,7 @@
             [algos.binary_search.prework.exercise :refer :all]))
 
 (deftest  binary-search-test
-    (are [res coll el] (= (binary-search coll el) res)
+    (are [res coll item] (= (binary-search coll item) res)
                        false [0, 1, 2, 8, 13, 17, 19, 32, 42] 3   ; example from reading
                        false [] 3                                 ; 0 el array
                        false [4] 3                                ; 1 el array
