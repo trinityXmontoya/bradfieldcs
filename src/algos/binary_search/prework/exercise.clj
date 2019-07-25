@@ -33,10 +33,10 @@
     (loop [lower-bound 0
            upper-bound (dec (count coll))]
       (if
-        (< upper-bound lower-bound) (= (coll lower-bound) item)
+        (< upper-bound lower-bound) false
         (let [midpoint (quot (+ lower-bound upper-bound) 2)
               midpoint-el (coll midpoint)]
           (cond
-            (= item midpoint-el) true
             (< item midpoint-el) (recur lower-bound (dec midpoint))
-            (> item midpoint-el) (recur (inc midpoint) upper-bound)))))))
+            (> item midpoint-el) (recur (inc midpoint) upper-bound)
+            (= item midpoint-el) true))))))
