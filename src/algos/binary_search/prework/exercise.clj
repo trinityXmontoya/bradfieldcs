@@ -2,20 +2,18 @@
 
 (defn binary-search
   [coll item]
-  (cond
-    (empty? coll)         false
-    (< item (first coll)) false
-    (> item (last coll))  false
-    :else
-    (loop [coll coll]
-      (if (empty? coll)
-        false
+  (loop [coll coll]
+    (cond
+      (empty? coll)         false
+      (< item (first coll)) false
+      (> item (last coll))  false
+      :else
         (let [midpoint (quot (count coll) 2)
               midpoint-el (get coll midpoint)]
           (cond
             (= item midpoint-el) true
             (< item midpoint-el) (recur (subvec coll 0 midpoint))
-            (> item midpoint-el) (recur (subvec coll (inc midpoint)))))))))
+            (> item midpoint-el) (recur (subvec coll (inc midpoint))))))))
 
 ;4. Looking back
 ; unlike Python's slice, subvec is O(1)
