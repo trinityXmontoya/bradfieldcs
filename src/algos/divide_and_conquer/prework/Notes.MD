@@ -32,3 +32,5 @@ Worst Case: O(N^2)
 A distinguishing factor of selection sort is that it's best & worst case scenario are exactly the same because it performs the exact same # of comparisons regardless of the data in the array (ex. if it already sorted).
 
 _Why is the sorting problem a good candidate for divide and conquer?_
+
+Sorting is a good candidate for divide and conquer because we can easily sort a subset of elements.
