@@ -61,38 +61,37 @@
   [coll]
   (split-at (quot (count coll) 2) coll))
 
-(defn merge-and-count
+(defn inv-count
   [coll]
   (if (< (count coll) 2)
     [coll 0]
-      (let [[left right] (-split-coll coll)]
-        (loop [final-coll []
-               left left
-               right right
-               final-inv-count 0]
-          (cond
-            (empty? left)									[(concat final-coll right) final-inv-count]
-            (empty? right) 								[(concat final-coll left)  final-inv-count]
-            (< (first left) (first right)) (recur (conj final-coll (first left))
-                                                  (rest left)
-                                                  right
-                                                  final-inv-count)
-            :else													 (recur (conj final-coll (first right))
-                                                   left
-                                                   (rest right)
-                                                   (+ final-inv-count (count left))))))))
+    (let [[left right] (-split-coll coll)]
+      (loop [final-coll []
+             left left
+             right right
+             final-inv-count 0]
+        (cond
+          (empty? left)									 [(concat final-coll right) final-inv-count]
+          (empty? right) 								 [(concat final-coll left)  final-inv-count]
+          (< (first left) (first right)) (recur (conj final-coll (first left))
+                                                (rest left)
+                                                right
+                                                final-inv-count)
+            :else												 (recur (conj final-coll (first right))
+                                                 left
+                                                 (rest right)
+                                                 (+ final-inv-count (count left))))))))
 
+(defn merge-and-count
+  [sorted-left sorted-right]
+
+
+  )
 
 (defn num-of-inversions-merge-sort
   [coll]
-  (let [[[sorted-left left-invs] [sorted-right right-invs]] (map merge-and-count (-split-coll coll))
-        mid-invs 0]
-
-    (+ left-invs
-       right-invs
-       mid-invs)
-
-
-    ))
+  (let [[[sorted-left left-invs] [sorted-right right-invs]] (map inv-count (-split-coll coll))
+        split-invs (merge-and-count sorted-left sorted-right)]
+    (+ left-invs right-invs split-invs)))
 
 ;4. Looking back
