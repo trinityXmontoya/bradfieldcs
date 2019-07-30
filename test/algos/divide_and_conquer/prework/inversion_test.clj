@@ -18,3 +18,11 @@
                   1 [2 1]
                   0 [1]
                   0 []))
+
+(deftest num-of-inversions-merge-sort-test
+  (are [res coll] (= (num-of-inversions-merge-sort coll) res)
+                  5 [1, 20, 6, 4, 5]
+                  3 [2,  4, 1, 3, 5]
+                  1 [2 1]
+                  0 [1]
+                  0 []))

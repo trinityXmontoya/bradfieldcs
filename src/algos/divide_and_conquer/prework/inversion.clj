@@ -57,49 +57,7 @@
 ;Use merge sort
 
 ;3. Carry out plan
-(defn merge-sort
-  [coll]
-  (if (< (count coll) 2)
-    coll
-    (let [[left right] (split-at (quot (count coll) 2) coll)]
-      (loop [final-coll []
-             left (merge-sort left)
-             right (merge-sort right)]
-        (cond
-          (empty? left)									 (concat final-coll right)
-          (empty? right) 								 (concat final-coll left)
-          (< (first left) (first right)) (recur (conj final-coll (first left)) (rest left) right)
-          :else													 (recur (conj final-coll (first right)) left (rest right)))))))
-
 (defn num-of-inversions-merge-sort
-  [coll]
-  (let [[left right] (split-at (quot (count coll) 2) coll)
-        sorted-left (merge-sort left)
-        sorted-right (merge-sort right)
-        mid-idx (count sorted-left)]
-    (loop [left-idx 0
-           right-idx 0
-           inv-cnt 0]
-      (let [left-el (nth sorted-left left-idx nil)
-            right-el (nth sorted-right right-idx nil)]
-
-        (when (= coll   [1 20 6 4 5])
-          (println "LFET:" sorted-left)
-          (println "RIGHT:" sorted-right)
-
-          (println "left el:" left-el)
-          (println "right el:" right-el)
-          (println "current inv:" inv-cnt)
-          (println "new inv:"
-                   (if (and (not (nil? left-el)) (not (nil? right-el)) (> left-el right-el))
-                     (+ inv-cnt (- mid-idx left-idx))
-                     inv-cnt))
-          )
-
-      (cond
-        (nil? left-el) inv-cnt
-        (nil? right-el) inv-cnt
-        (and (> left-el right-el)) (recur (inc left-idx) (inc right-idx) (+ inv-cnt (- mid-idx left-idx)))
-        :else (recur (inc left-idx) right-idx inv-cnt ))))))
+  [coll])
 
 ;4. Looking back
