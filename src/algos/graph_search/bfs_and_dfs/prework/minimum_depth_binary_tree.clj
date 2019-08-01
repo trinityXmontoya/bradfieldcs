@@ -29,11 +29,11 @@
 ;3. Carry out plan
 (defn min-depth-w-math
   [bin-tree]
-  (let [index-of-first-leaf-node (first
-                                   (keep-indexed
-                                     (fn [idx el]
-                                       (when (nil? el) idx)) bin-tree))
-        steps-to-parent (take-while #(> % 1) (iterate #(quot % 2) index-of-first-leaf-node)) ]
+  (let [leaf-node-idx (first
+                        (keep-indexed
+                          (fn [idx el]
+                            (when (nil? el) idx)) bin-tree))
+        steps-to-parent (take-while #(> % 1) (iterate #(quot % 2) leaf-node-idx))]
     (count steps-to-parent)))
 
 ;4. Look back
@@ -48,11 +48,42 @@
 ; because that'd be represented like this
 ; [0, 1, nil, 2, nil, nil, 3, nil]
 ; and then the first nil is a child of the root node but the root node wouldn't be considered a leaf node.
-; Continuing to represent the non-existent children of a non-existent node causes other problems.
+; Continuing to represent the non-existent children of a non-existent node causes other problems (when trying to determine the first nil non-root-node-child index i'd have to ignore any idx < 2 but also whose parent is nil). sample below that adds complexity of having to look up 4 elements for each check
+;(defn leaf-node?
+;  [idx coll]
+;  (let [node (get coll idx)
+;        parent (get coll (quot idx 2))
+;        left-child (get coll (* 2 idx))
+;        right-child (get coll (inc (* 2 idx)))]
+;    (and
+;      (not (nil? node))
+;      (not (nil? parent))
+;      (nil? left-child)
+;      (nil? right-child))))
 ; I was mistaken in thinking that binary trees were always represented as lists in this specific format.
 ; Back to the drawing board to use my newfound graph knowledge as this lesson originally intended.
 
 
 ;2. Devise a plan
+; Build and use a graph to find the first leaf node
+
 ;3. Carry out plan
+(defn node
+  [val]
+  {:val val
+   :left nil
+   :right nil})
+
+(defn build-tree
+  [coll]
+
+
+  )
+
+(defn min-depth
+  [coll]
+  (let [bin-tree (build-tree coll)]
+
+    ))
+
 ;4. Look back
