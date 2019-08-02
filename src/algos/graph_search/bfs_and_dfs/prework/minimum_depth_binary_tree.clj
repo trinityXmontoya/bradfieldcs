@@ -117,3 +117,10 @@
 ; properly exit when I find the *first* leaf node as in my first attempt. You can imagine the first child
 ; of the root node is a leaf node but this will still traverse the entire tree.
 ; I shouldn't've spent so much time on my first approach, esp bc it wasn't even utilizing new things I learned. Going to reread the trees + graph work and see if I come up with something better.
+
+
+;2. Devise a plan
+; postorder traversal?
+;
+;3. Carry out plan
+;4.
