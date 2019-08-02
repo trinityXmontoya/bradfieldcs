@@ -83,39 +83,37 @@
    :right nil})
 
 (defn build-tree
-  [coll]
-  {
-   :val 3
-   :left {
-          :val 9
-          :left nil
-          :right nil
-          }
-   :right {
-           :val 20
-           :left {
-                  :val 15
-                  }
-           :right {
-                   :val 7
-                   }
-           }
-   })
+  [coll])
 
-(defn min-depth
-  [coll]
-  (let [bin-tree (build-tree coll)]
-    (loop [tree bin-tree]
-      (let [root (tree :val)
-            left (tree :left)
-            right (tree :right)]
+(defn min-depth-w-tree
+  [bin-tree]
+    (loop [tree bin-tree
+           depth 0]
+      (cond
+        ; current node does not exist
+        (nil? (tree :val)) 0
 
+        ; reached end of left + right subtree -> add 1 (parent)
+        (and (nil? (tree :left))
+             (nil? (tree :right))) 1
 
+        ; reached end of left subtree -> traverse right + add 1 for this being left leaf node
+        (nil? (tree :left)) (recur (tree :right) (inc depth))
 
-        )
+        ; reached end of right subtree -> traverse left + add 1 for this being right leaf node
+        (nil? (tree :right)) (recur (tree :left) (inc depth))
 
-
-      )
-    ))
+        ; traverse & compare left subtree + right subtree, add 1 for current parent
+        :else (inc
+                (min (min-depth-w-tree (tree :left))
+                     (min-depth-w-tree (tree :right)))))))
 
 ;4. Look back
+; I pass the input array as a tree (I started off with it as an array and the first
+; step in `min-depth-w-tree` was converting it to a tree but as I was planning out the recursive calls I
+; realized I'd have to convert the left & right subtrees back to arrays just for them to be able to use the
+; min-depth-w-tree function.
+; Though this is O(N) because I'm only going through each node of the tree once, there must be a way to
+; properly exit when I find the *first* leaf node as in my first attempt. You can imagine the first child
+; of the root node is a leaf node but this will still traverse the entire tree.
+; I shouldn't've spent so much time on my first approach, esp bc it wasn't even utilizing new things I learned. Going to reread the trees + graph work and see if I come up with something better.
