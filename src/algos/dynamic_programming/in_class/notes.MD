@@ -1,0 +1,1 @@
+implementation w/o priority queue is O(V^2+E). This makes it preferable when there are more nodes than edges.
